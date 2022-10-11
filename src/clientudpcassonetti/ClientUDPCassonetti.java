@@ -31,7 +31,6 @@ public class ClientUDPCassonetti {
     }
 
     public ArrayList open(int scelta, int id) throws UnknownHostException, IOException {
-        System.out.println("VALORE DI ID NEL OPEN: "+id);
         DatagramPacket datagram;
         ByteBuffer input, input2, output;
         byte[] buffer;
@@ -50,8 +49,6 @@ public class ClientUDPCassonetti {
         socket.receive(datagram);
         if (datagram.getAddress().equals(address) && datagram.getPort() == UDP_port) { //verifica della porta e dell'indirizzo
             input = ByteBuffer.wrap(datagram.getData(), 0, 8);
-            //input2 = ByteBuffer.wrap(datagram.getData(),4,8);
-            //buffer = datagram.getData();
             result = input.getInt();
             valori.add(result);
             codice = input.getInt();
@@ -71,24 +68,16 @@ public class ClientUDPCassonetti {
                 Scanner input = new Scanner(System.in);
                 System.out.print("          MENU\n1) Creare una nuova tessera.\n2) Eliminare una tessera.\n3) Aprire un cassonetto.\n4) Uscire. \nEffettuare una scelta: ");
                 int scelta = input.nextInt();
-                /*if (scelta == 3 || scelta == 2) {
-                    System.out.println("Inserie l'ID della tessera: ");
-                    id = input.nextInt();
-                }else{
-                    id = 0;
-                }*/
                 switch (scelta) {
                     case 1:
                         id = 0;
                         answer = client.open(scelta, id);
-                        System.out.println("VALORE DI ID NEL CLIENT: "+id);
                         System.out.println("L'ID della tua tessera è -> " + answer.get(1) + "\n\n");
 
                         break;
                     case 2:
-                        System.out.println("Inserie l'ID della tessera: ");
+                        System.out.println("Inserire l'ID della tessera: ");
                         id = input.nextInt();
-                        System.out.println("VALORE DI ID NEL CLIENT: "+id);
                         answer = client.open(scelta, id);
                         if ((int) answer.get(0) == 1) {
                             System.out.println("Tessera eliminata con successo\n\n");
@@ -99,7 +88,6 @@ public class ClientUDPCassonetti {
                     case 3:
                         System.out.println("Inserie l'ID della tessera: ");
                         id = input.nextInt();
-                        System.out.println("VALORE DI ID NEL CLIENT: "+id);
                         answer = client.open(scelta, id);
                         if ((int) answer.get(0) == 1) {
                             System.out.println("Apertura autorizzata\n\n");
