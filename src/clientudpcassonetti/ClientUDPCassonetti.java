@@ -91,10 +91,11 @@ public class ClientUDPCassonetti {
                         answer = client.open(scelta, id);
                         if ((int) answer.get(0) == 1) {
                             System.out.println("Apertura autorizzata\n\n");
-                        } else if ((int) answer.get(0) == -1) {
-                            System.out.println("Apertura negata, hai già aperto il cassonetto nelle 72 ore precedenti\n\n");
                         } else if ((int) answer.get(0) == -2) {
                             System.out.println("Tessera non trovata\n\n");
+                        } else {
+                            int res = 72 - (int) answer.get(0);
+                            System.out.println("Apertura negata, hai già aperto il cassonetto nelle 72 ore precedenti. Mancono " +res+"h all'apertura.\n\n");
                         }
                         break;
                     case 4:
